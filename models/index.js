@@ -7,7 +7,7 @@ var basename  = path.basename(__filename);
 var env       = process.env.NODE_ENV || 'development';
 var config    = {
     "username": "root",
-    "password": process.env.DB_PASSWORD,
+    "password": "pioneer123",
     "database": "eztime_db",
     "host": "127.0.0.1",
     "dialect": "mysql"

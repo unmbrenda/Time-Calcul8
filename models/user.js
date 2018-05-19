@@ -1,10 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
     let User = sequelize.define("User", {
       id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: 1000
       },
       first_name: {
           type: DataTypes.STRING(32),
@@ -27,7 +27,11 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.TimeSheet, {
             onDelete: 'cascade'
         });
-        // User.hasOne(models.Position)
+        User.belongsTo(models.Position, {
+            foreignKey: {
+                allowNull: false
+            }
+        })
     }
     return User;
   };
