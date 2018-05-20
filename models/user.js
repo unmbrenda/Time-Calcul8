@@ -27,11 +27,7 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.TimeSheet, {
             onDelete: 'cascade'
         });
-        User.belongsTo(models.Position, {
-            foreignKey: {
-                allowNull: false
-            }
-        })
+        User.hasOne(models.Position)
     }
     return User;
   };
