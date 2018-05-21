@@ -17,6 +17,8 @@ let { htmlRouter } = require('./routes/html_router');
 
 app.use(loginRoute);
 
+
+//should go before error handling but after api
 app.use('/', htmlRouter);
 
 

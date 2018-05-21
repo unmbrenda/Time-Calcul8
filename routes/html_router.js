@@ -10,8 +10,8 @@ renderClockInOut = (req, res, next) => {
     return res.render('clockInOut');
 };
 
-htmlRouter.get('/', renderLandingPage);
 htmlRouter.get('/punch', renderClockInOut);
+htmlRouter.get('/', renderLandingPage);
 
 
 module.exports = {
