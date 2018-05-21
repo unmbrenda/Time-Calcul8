@@ -12,9 +12,24 @@ var employee = {
           cb(res);
       })
   },
+
+  displayTimeWorked: function(idValue,cb){
+  
+      orm.displayTimeWorked(idValue, function(err,res){
+            if(err) throw err;
+            cb(res);
+    })
+  },
+  updateOne: function(tableName,colNames,new_values,id,idValue,cb){
+      
+      orm.updateOne(queryString,tableName,[colNames],[new_values],id, idValue, function(err, res){
+        if (err) throw err;
+        cb(res);
+    })
+}
   
 
 }
 
 //export orms for use
-module.exports = employees;
+module.exports = employee;

@@ -3,8 +3,8 @@ var orm = {
 
     //display all info
     selectAll: function(tableName,cb){
-        var queryString = "SELECT * FROM ??";
-        connection.query(queryString,tableName, function(err, res){
+        var queryString = "SELECT * FROM ?? GROUP BY = ??";
+        connection.query(queryString,tableName,colName, function(err, res){
             if (err) throw err;
             cb(res);
         })
@@ -20,9 +20,9 @@ var orm = {
 
     //selectOne
     //show info for a certain employee when they log in
-    selectOne: function(tableName,userId,userID_value,cb){
-        var queryString = "SELECT * FROM ?? WHERE ?? = ? ";
-        connection.query(queryString, [tableName,userId,userID_value], function(err, res){
+    selectOne: function(time,punch_code,tableName,userId,userID_value,cb){
+        var queryString = "SELECT ?? FROM ?? WHERE ?? = ? ";
+        connection.query(queryString,[time,punch_code],tableName,userId,userID_value, function(err, res){
             if (err) throw err;
             cb(res);
         })

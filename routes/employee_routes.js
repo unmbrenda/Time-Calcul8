@@ -3,8 +3,9 @@ var routerEMP = express.Router()
 
 var employee = require('../models/employee.js')
 
-router.get('/api/employees', function (req, res) {       //note sure which route to give
-  employee.selectAll('users',function (data) {
+router.get('/api/employees/clockedin/:id', function (req, res) {
+  // tis route to show time clocked and the type of punch( in or out)
+  employee.selectOne(['time_punch', 'punch_code'], 'time_sheet', 'employee_id', req.params.id, function (data) {
     // sending to front end
     var employeeObj = {
       employee: data
@@ -12,22 +13,20 @@ router.get('/api/employees', function (req, res) {       //note sure which route
     res.render('index', employeeObj)
   })
 // response with data to index.html
-});
+})
 
-router.get('api/employees/hours/:id', function(req,res){
-    
-    //if clock in and clockout already happen. show this page
-    employee.displayTimeWorked(req.params.id, function(result){
+router.get('api/employees/clockedout/:id', function (req, res) {
 
-        var timeWorked = {
-
-            in: result.punchIN,
-            out: result.punchOUT,
-            day: result.DAY_OF_WEEK,
-            hours: result.hoursWORKED
-        }
-        res.render('  ',timeWorked); //where to render?
-    })
+  // if clock in and clockout already happen. show this page
+  employee.displayTimeWorked(req.params.id, function (result) {
+    var timeWorked = {
+      in: result.punchIN,
+      out: result.punchOUT,
+      day: result.DAY_OF_WEEK,
+      hours: result.hoursWORKED
+    }
+    res.render('  ', timeWorked); // where to render?
+  })
 })
 
 // clokc in/out for each employee
@@ -50,7 +49,6 @@ router.post('/api/employees', function (req, res) {
       } else {
         res.redirect('/')
         res.json({ employee_id: result.insertId })
-
       }
     })
 })
@@ -72,9 +70,8 @@ router.post('/api/employees/:id', function (req, res) {
       } else {
         res.redirect('/')
         res.json({ employee_id: result.insertId })
-
       }
     })
 })
 
-module.exports = routerEMP;
+module.exports = routerEMP
