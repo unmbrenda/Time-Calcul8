@@ -3,7 +3,7 @@ let app = express();
 let exphbs = require('express-handlebars')
 let path = require('path')
 let bodyParser = require('body-parser');
-
+app.use(express.static('public'));
 
 
 app.set("views", path.join(__dirname, '/views'));
@@ -13,8 +13,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 let db = require('./models');
 
 let loginRoute = require('./routes/login.js');
+let { htmlRouter } = require('./routes/html_router');
 
 app.use(loginRoute);
+
+
+//should go before error handling but after api
+app.use('/', htmlRouter);
 
 
 
