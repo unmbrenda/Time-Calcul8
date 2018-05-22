@@ -7,7 +7,7 @@ middlewareObj.isLoggedIn = (req,res,next)=>{
     if(req.isAuthenticated()){
         return next();
     }
-    res.redirect('/login')
+    res.render('/employee/login')
 }
 
 
@@ -17,15 +17,17 @@ middlewareObj.isManager = (req,res,next)=>{
     if(req.isAuthenticated()){
     models.User.findOne({
         where:{
-            id: req.body.id
+            id: req.user.id
         }
     }).then(response=>{
         if(response.getDataValue('PositionId')===2){
-            next();
+           return next();
         }else{
-            res.redirect('/manager/login')
+            res.render('manager-login');
         }
     })
+}else{
+    res.render('manager-login');
 }
 }
 
