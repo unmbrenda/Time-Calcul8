@@ -25,6 +25,11 @@
         </div>
     </header>
     <div class="container">
+        {{#if currentUser}}
+        <button class="btn btn-light btn-lg float-right">
+            <a href="/logout">Logout</a>
+        </button>
+        {{/if}}
 
         {{{body}}}
 
