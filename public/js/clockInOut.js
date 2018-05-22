@@ -21,18 +21,20 @@ function clockInOut(employeeId, punchCode){
 
     const newEntry = {
         employee_id: employeeId,
-        punch_code: punchCode,
-        time_punch: moment().format('YYYY-MM-DD HH:mm:ss'),
+        punch_code: punchCode        
     };
 
-    const result = fetch('/api/employees', {
-        body: JSON.stringify(newEntry),
+    $.ajax('/api/employees', {
         method: 'post',
+        data: {
+            UserId: newEntry.employee_id,
+            punch_code: newEntry.punch_code
+        }
     })
-    .then(response => response.json())
+    // .then(response => response.json())
     .then(response => {
         punchCard.reset();
-        punchCardMessage.innerHTML("Action cmpleted.");
+        punchCardMessage.innerHTML = "Action cmpleted.";
 
         setTimeout(() => {
             punchCardMessage.innerHTML = "";
@@ -46,7 +48,7 @@ function clockInOut(employeeId, punchCode){
 
 function handleClick(event){
     event.preventDefault();
-    const punchCode = event.target.id;
+    const punchCode = this.id;
 
     clockInOut(userId.value, punchCode);
 
