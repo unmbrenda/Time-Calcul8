@@ -7,21 +7,23 @@ const saltRounds = 10;
 let db = require('../models')
 let middleware = require('../middleware')
 
-login.get('/employee/login', (req,res)=>{
-    res.render('login');
+login.get('/employee/login', middleware.isLoggedIn,(req,res)=>{
+    res.redirect('/employee/home');
 })
-login.get('/employee/home', (req, res)=>{
+login.get('/employee/home', middleware.isLoggedIn, (req, res)=>{
     res.render('employee-home');
 })
 
-login.post('/employee/login', passport.authenticate('local'), (req, res)=>{
+login.post('/employee/login', passport.authenticate('employee'), (req, res)=>{
+    req.flash('success', 'Successfully logged in as employee')
     res.redirect('/employee/home');
+
 })
 
-login.get('/employee/register', (req, res)=>{
+login.get('/employee/register', middleware.isManager, (req, res)=>{
     res.render('employee-register');
 })
-login.post('/employee/register', (req, res)=>{
+login.post('/employee/register', middleware.isManager,(req, res)=>{
     console.log(req.body);
     bcrypt.hash(req.body.password, saltRounds, (err, hash)=>{
         db.User.create({
@@ -30,9 +32,26 @@ login.post('/employee/register', (req, res)=>{
             email: req.body.email,
             password: hash,
             PositionId: req.body.position
+        }).then(data=>{
+            req.flash('success', `Successfully registered ${data.first_name} ${data.last_name}`);
+            res.redirect('/manager/home');
+        }).catch(err=>{
+            req.flash('error', 'Failed to register.');
+            res.redirect('/manager/home')
         })
     })
     
+})
+login.get('/manager/login',middleware.isManager ,(req,res)=>{
+    res.redirect('/manager/home')
+})
+login.post('/manager/login', passport.authenticate('manager'), (req,res)=>{
+    req.flash('success', 'Successfully logged in as manager');
+    res.redirect('/manager/home')
+
+})
+login.get('/manager/home', middleware.isManager,(req,res)=>{
+    res.render('employee-manager');
 })
 login.get('/logout', middleware.isLoggedIn, (req,res)=>{
     req.logout();
