@@ -56,8 +56,13 @@ app.get('/', (req,res)=>{
     res.render('index')
 })
 let loginRoute = require('./routes/login.js');
+let { htmlRouter } = require('./routes/html_router');
 
 app.use(loginRoute);
+
+
+//should go before error handling but after api
+app.use('/', htmlRouter);
 
 
 
