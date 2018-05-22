@@ -8,11 +8,22 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.css">
     <link rel="stylesheet" href="./main.css">    
-    <title>Burger Devourer</title>
+    <title>Time Calcul8</title>
 </head>
 <body>
     <div class="container">
-
+      <nav class="navbar navbar-light bg-light justify-content-between">
+  <a class="navbar-brand">
+      <img src="/img/icon.png" width="75" height="75" alt="">
+  </a>
+  
+      {{#if currentUser}}
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+        <a href="/logout">Logout</a>
+        </button>
+    {{/if}}
+  
+</nav>  
     {{{body}}}
     </div>
     <script
