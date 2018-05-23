@@ -22,7 +22,9 @@ router.post('/api/employees', function (req, res) {
 router.get('/api/employees', middleware.isManager, (req, res) => {
     db.User.findAll({
         where: {
-            PositionId: 1
+            id: {
+                [db.Sequelize.Op.notIn] : [10000, req.user.id]
+            }
         }
     }).then(data => {
         res.json(data);
