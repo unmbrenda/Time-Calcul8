@@ -1,11 +1,27 @@
-<form action="/manager/login" method="post">
-    <label for="username" class="form-group">
-        Employee ID
-        <input type="text" id="username" name="username" class="form-control">
-    </label>
-    <label for="password" class="form-group">
-        Password
-        <input type="password" id="password" name="password" class="form-control">
-    </label>
-    <button type="submit">Login</button>
-</form>
+<h4 style="text-align: center;">Log in as Manager</h4>
+<br>
+<hr>
+<br>
+
+<div class="row">
+    <div class="col-sm-6 offset-sm-3">
+        <form action="/manager/login" method="post">
+            <div class="form-group">
+                <label for="username">
+                    Employee ID
+
+                </label>
+                <input type="text" id="username" name="username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">
+                    Password
+
+                </label>
+                <input type="password" id="password" name="password" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        </form>
+    </div>
+</div>

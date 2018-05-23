@@ -32,7 +32,7 @@ login.post('/employee/register', middleware.isManager, (req, res) => {
             password: hash,
             PositionId: req.body.position
         }).then(data => {
-            req.flash('success', `Successfully registered ${data.first_name} ${data.last_name}`);
+            req.flash('success', `Successfully registered ${data.first_name} ${data.last_name} with ID - ${data.id}`);
             res.redirect('/manager/home');
         }).catch(err => {
             req.flash('error', 'Failed to register.');
