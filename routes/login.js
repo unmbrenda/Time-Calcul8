@@ -11,7 +11,7 @@ login.get('/employee/login', middleware.isLoggedIn, (req, res) => {
     res.redirect('/employee/home');
 })
 login.get('/employee/home', middleware.isLoggedIn, (req, res) => {
-    res.render('employee-home');
+    res.render('employee-timemanage');
 })
 
 login.post('/employee/login', passport.authenticate('employee'), (req, res) => {
