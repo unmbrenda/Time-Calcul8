@@ -1,3 +1,7 @@
+<a href="/manager/home" class="btn btn-info">Manager Home</a>
+<br>
+<hr>
+<br>
 <form action="/employee/register" method="post">
     <label for="first-name" class="form-group">
         First Name
@@ -16,10 +20,12 @@
         <input type="password" id="password" name="password" class="form-control">
     </label>
     <label for="position" class="form-group">
+        Position*:
         <select name="position" id="position" class="form-control">
             <option value="1">1</option>
             <option value="2">2</option>
         </select>
     </label>
+    <p>Position: Manager = 2 Employee = 1</p>
     <button class="btn btn-success">Register</button>
 </form>

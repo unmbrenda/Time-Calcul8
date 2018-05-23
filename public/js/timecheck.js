@@ -1,83 +1,105 @@
 
 moment().format();
+$('#error').hide();
+updateCollective();
+$("#hrSubmit").on("click", function () {
 
-$("#hrSubmit").on("click", function() {
+  // Grabs user input
+  var clockIn = $("#clockIn").val();
+  var clockOut = $("#clockOut").val();
+  var date = $("#date").val()
+  var noteAdd = $("#noteAdd").val();
 
-    // Grabs user input
-    var clockIn = $("#clockIn").val();
-    var clockOut = $("#clockOut").val();
-    var date = $("#date").val()
-    var noteAdd = $("#noteAdd").val();
-  
-    // Creates local "temporary" object for holding train data
-    var newTime = {
-  
-      clockIn: clockIn,
-      clockOut: clockOut,
-      date: date,
-      noteAdd: noteAdd
-    };
-  
+
+
+  // Creates local "temporary" object for holding train data
+  var newTime = {
+
+    clockIn: clockIn,
+    clockOut: clockOut,
+    date: date,
+    noteAdd: noteAdd
+  };
+
   $.ajax({
     type: "POST",
     url: "/api/employees/addpunch",
     data: {
-        punch_code: 'clockIn',
-        time_punch: newTime.clockIn,
-        date: newTime.date
+      punch_code: 'clockIn',
+      time_punch: newTime.clockIn,
+      date: newTime.date
     },
     dataType: "json"
-  }).then(function(data){
-    console.log(moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss'))
+  }).then(function (data) {
+    if (data.message) {
+      $('#error').text(data.message).show();
+
+    }
   });
 
   $.ajax({
     type: 'POST',
     url: '/api/employees/addpunch',
-    data:{
-        punch_code: 'clockOut',
-        time_punch: newTime.clockOut,
-        date: newTime.date
+    data: {
+      punch_code: 'clockOut',
+      time_punch: newTime.clockOut,
+      date: newTime.date
     },
     dataType: 'json'
-  }).then(function(data){
-      console.log(data)
+  }).then(function (data) {
+    if (data.message) {
+      $('#error').text(data.message).show();
+    }
   })
+  updateCollective();
 
 });
 
-  //   $.post("/api/employees/addpunch", newTime.clockIn, )
 
-  //   // Determine when the next train arrives.
-  //   return false;
-  // });
-  
-  
-  
-  //   var timeArr = tFirstTrain.split(":");
-  //   var trainTime = moment().hours(timeArr[0]).minutes(timeArr[1]);
-  //   var maxMoment = moment.max(moment(), trainTime);
-  //   var tMinutes;
-  //   var tArrival;
-  
-  //   // If the first train is later than the current time, sent arrival to the first train time
-  //   if (maxMoment === trainTime) {
-  //     tArrival = trainTime.format("hh:mm A");
-  //     tMinutes = trainTime.diff(moment(), "minutes");
-  //   } else {
-  
-  //     // Calculate the minutes until arrival using hardcore math
-  //     // To calculate the minutes till arrival, take the current time in unix subtract the FirstTrain time
-  //     // and find the modulus between the difference and the frequency.
-  //     var differenceTimes = moment().diff(trainTime, "minutes");
-  //     var tRemainder = differenceTimes % tFrequency;
-  //     tMinutes = tFrequency - tRemainder;
-  //     // To calculate the arrival time, add the tMinutes to the current time
-  //     tArrival = moment().add(tMinutes, "m").format("hh:mm A");
-  //   }
-  //   console.log("tMinutes:", tMinutes);
-  //   console.log("tArrival:", tArrival);
-  
-  //   // Add each train's data into the table
-  //   $("#train-table > tbody").append("<tr><td>" + tName + "</td><td>" + tDestination + "</td><td>" +
-  //           tFrequency + "</td><td>" + tArrival + "</td><td>" + tMinutes + "</td></tr>");
+function updateCollective() {
+  $.ajax({
+    url: '/api/employees/timesheet',
+    method: 'GET'
+
+  })
+    .then(data => {
+      let currentDate = [];
+      let entries = 0;
+
+
+      data.forEach(t => {
+        if (currentDate.indexOf(moment(t.createdAt).format('YYYY-MM-DD')) === -1) {
+          currentDate.push(moment(t.createdAt).format('YYYY-MM-DD'));
+        }
+      })
+      currentDate.forEach(date => {
+        let dateRow = $(`<tr class="${date}">`)
+        dateRow.append($(`<td>`).text(moment(date).format('YYYY MMM DD')))
+        dateRow.append($(`<td class="in">`));
+        dateRow.append($(`<td class="out">`))
+        dateRow.append($(`<td class="total">`))
+        let punchIn;
+        let punchOut;
+        let body = $('#hoursTable')
+        body.append(dateRow);
+        data.forEach(d => {
+          if (date === moment(d.createdAt).format('YYYY-MM-DD')) {
+            if (d.punch_code === 'clockIn') {
+              punchIn = d.createdAt;
+            } else {
+              punchOut = d.createdAt;
+            }
+          }
+        })
+        $(`.${date} .in`).text(moment(punchIn).format('hh:mm'))
+        if (punchOut) {
+
+          $(`.${date} .out`).text(moment(punchOut).format('hh:mm'))
+          let x = moment(punchOut).diff(moment(punchIn), 'hours')
+          $(`.${date} .total`).text(x)
+        }
+
+      })
+    })
+
+}
