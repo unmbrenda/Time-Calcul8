@@ -21,8 +21,6 @@ passport.use('employee', new LocalStrategy((username, password, done)=>{
         }
     }).then(data=>{
         let pw = data.getDataValue('password');
-        console.log(pw);
-        // bcrypt.hash(req.body.password, saltRounds, (err, hash)=>{
             bcrypt.compare(password, pw, (err, response)=>{
                 if(err){
                     return done(null, false, {message: 'Incorrect username or password'});
@@ -38,7 +36,6 @@ passport.use('manager', new LocalStrategy((username, password, done)=>{
         }
     }).then(data=>{
         let pw = data.getDataValue('password');
-        console.log(pw);
         if(data.PositionId !== 2){
             return done(null, false, {message: 'You are not a manager'});
         }else{
@@ -49,7 +46,6 @@ passport.use('manager', new LocalStrategy((username, password, done)=>{
                 return done(null, data);
             })
         }
-        // bcrypt.hash(req.body.password, saltRounds, (err, hash)=>{
             
     })
 }))
@@ -81,10 +77,12 @@ app.use(function(req,res, next){
 app.get('/', (req,res)=>{
     res.render('index')
 })
-let loginRoute = require('./routes/login.js');
+let loginRoute = require('./routes/login');
+let punchRoute = require('./routes/employee_routes_sqlze');
 let { htmlRouter } = require('./routes/html_router');
 
 app.use(loginRoute);
+app.use(punchRoute);
 
 
 //should go before error handling but after api
@@ -111,12 +109,18 @@ db.sequelize.sync().then(()=>{
         //     position_title: "manager",
         //     id: 2
         // })
-        // db.User.create({
-        //     first_name: "John",
-        //     last_name: "Lagmay",
-        //     email: "jj@jj.com",
-        //     password: "password",
-        //     PositionId: "1"
+        // bcrypt.hash('timeismoney', 10, (err, hash)=>{
+        //     db.User.create({
+        //         first_name: 'Super',
+        //         last_name: 'User',
+        //         email: "superuser@eztime.db",
+        //         password: hash,
+        //         PositionId: 2
+        //     }).then(data=>{
+        //         console.log('create success')
+        //     }).catch(err=>{
+        //         console.log('failed create')
+        //     })
         // })
     })
 })

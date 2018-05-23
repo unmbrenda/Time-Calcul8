@@ -24,7 +24,6 @@ login.get('/employee/register', middleware.isManager, (req, res)=>{
     res.render('employee-register');
 })
 login.post('/employee/register', middleware.isManager,(req, res)=>{
-    console.log(req.body);
     bcrypt.hash(req.body.password, saltRounds, (err, hash)=>{
         db.User.create({
             first_name: req.body.firstname,
@@ -45,9 +44,20 @@ login.post('/employee/register', middleware.isManager,(req, res)=>{
 login.get('/manager/login',middleware.isManager ,(req,res)=>{
     res.redirect('/manager/home')
 })
-login.post('/manager/login', passport.authenticate('manager'), (req,res)=>{
-    req.flash('success', 'Successfully logged in as manager');
-    res.redirect('/manager/home')
+login.post('/manager/login', (req,res,next)=>{
+    passport.authenticate('manager', (err, user, info)=>{
+        if(err) {
+            req.flash('error', 'Database unavailable');
+            res.redirect('/')
+        }
+        req.logIn(user, function(err){
+            if(err) {
+                req.flash('error', 'You are not authorized to access this resource.');
+                res.redirect('/')
+            }
+            return res.redirect('/manager/home');
+        })
+    })(req,res,next);
 
 })
 login.get('/manager/home', middleware.isManager,(req,res)=>{
