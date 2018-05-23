@@ -6,10 +6,10 @@ var Sequelize = require('sequelize');
 var basename  = path.basename(__filename);
 var env       = process.env.NODE_ENV || 'development';
 var config    = {
-    "username": "root",
+    "username": process.env.DB_USERNAME,
     "password": process.env.DB_PASSWORD,
-    "database": "eztime_db",
-    "host": "127.0.0.1",
+    "database": process.env.DB,
+    "host": process.env.DB_HOST,
     "dialect": "mysql"
   }
 
