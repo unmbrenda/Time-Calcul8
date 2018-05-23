@@ -9,7 +9,7 @@ $.ajax({
 }).then(data=>{
     let select = $('#employees')
     data.forEach(e=>{
-        select.append($(`<option id="${e.id}">`).text(`${e.first_name} ${e.last_name}`))
+        select.append($(`<option id="${e.id}">`).text(`${e.first_name} ${e.last_name} id = ${e.id}`))
     })
 })
 
