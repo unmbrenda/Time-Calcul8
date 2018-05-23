@@ -65,7 +65,6 @@ router.get('/api/employees/timesheet', (req, res) => {
             UserId: req.user.id
         }
     }).then(data => {
-        console.log(data);
         res.json(data);
     }).catch(err => {
         res.status(404).end();
@@ -78,7 +77,6 @@ router.get('/api/employees/timesheet/:id', middleware.isManager, (req, res) => {
             UserId: req.params.id
         }
     }).then(data => {
-        console.log(data);
         res.json(data);
     }).catch(err => {
         res.status(404).end();
