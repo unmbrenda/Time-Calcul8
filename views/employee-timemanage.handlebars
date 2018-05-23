@@ -1,107 +1,100 @@
-<body class="bg-info">
-    <!--/.nav-collapse -->
-    <div class="navbar navbar-light bg-white ">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></a>
-                <a class="brand" href="#">
-                    <img class="img-responsive center-block mb-5 d-block mx-auto" src="img/icon.png" width="100">
-                </a>
-                <div class="nav-collapse collapse">
+<a href="/" class="btn btn-info">Home</a>
+<br>
+<hr>
+<br>
 
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="info well well-large">
+    <h1>Manage Time</h1>
+    <p>Fill in the table on the left with the start and end times of a your workday. Then click
+        <code>submit</code>, which will sum the hours and place them in the proceeding table.</p>
+</div>
 
-    <div class="info well well-large">
-        <h1>Manage Time</h1>
-        <p>Fill in the table on the left with the start and end times of a your workday. Then click <code>submit</code>, which will sum the hours and place them in the proceeding table.</p>
-    </div>
-
-    <!-- /container -->
-    <div id="centerContainer">
+<!-- /container -->
+<div id="centerContainer">
     <div class="container-fluid">
         <!--row of columns -->
         <div class="row">
-            <div class="block-left ">
+            <div class="col-sm-6">
                 <form id="timeTable">
                     <table class="span table table-responsive">
+                        <p>Time format: 24hr(8:00AM = 0800, 9:00PM = 2100)</p>
+                        <p>Date format: DD-MMM-YYYY(22-may-2018)</p>
+
                         <tcaption>Insert Times Below:</tcaption>
                         <thead>
                             <tr>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                <th>Additional Notes</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
 
                         <tbody id="hoursBody">
                             <tr>
-                                <td><input class="start" type="text" placeholder="HH:MM" id="clockIn"></td>
-                                <td><input class="end" type="text" placeholder="HH:MM" id="clockOut" ></td>
-                                <td class="notesTD"><input class="notesInput" type="text" placeholder="Enter Notes..." id="noteAdd"></td>
+                                <td>
+                                    <input class="start form-control" type="text" placeholder="HHMM" id="clockIn">
+                                </td>
+                                <td>
+                                    <input class="end form-control" type="text" placeholder="HHMM" id="clockOut">
+                                </td>
+                                <td class="notesTD">
+                                    <input class="notesInput form-control" type="text" placeholder="Date" id="date">
+                                </td>
                             </tr>
-                            <tr id="addRowTR">
-                                <td><button type="button" id="clearInputBTN" class="btn btn-danger">Clear</button></td>
-                                <td></td>
-                                <td id="addRowTD"><button type="button" class="btn btn-success" id="addRowBTN">Add Another Row +</button></td>
-                            </tr>
+
                         </tbody>
-                    
+
                     </table>
-                    <button type="button" class="btn span" id="hrSubmit">Submit</button>
+                    <button type="button" id="clearInputBTN" class="btn btn-danger float-right">Clear</button>
+                    <button type="button" class="btn btn-light span" id="hrSubmit">Submit</button>
                 </form>
-            <div id="error">This is a test error message.</div>
+                <div id="error" class="alert-danger">This is a test error message.</div>
             </div>
 
-            <div class="block">
-                <form id="sumTable">
-                    <table class="span4 table table-responsive">
-                        <tcaption>Collective Time Reported:</tcaption>
-                        <thead>
-                            <tr>
-                                <th>Sum of Hours</th>
-                                <th>Date Worked</th>
-                                <th>Additional Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody id="hoursTable">
-                            <tr>
-                                <td>
-                                    <div class="time"><span>Hours...</span></div>
-                                </td>
-                                <td>
-                                    <div class="taskOut"><span>Date...</span></div>
-                                </td>
-                                <td>
-                                    <div class="notesOut"><span>Notes...</span></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="time"><span>Hours...</span></div>
-                                </td>
-                                <td>
-                                    <div class="taskOut"><span>Date...</span></div>
-                                </td>
-                                <td>
-                                    <div class="notesOut"><span>Notes...</span></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div id="sumTotal">
-                        <strong>Total Hours Worked: </strong>
-                        <p id="totTime"></p>
-                        <button id="clearOutputTables" class="btn btn-danger" onclick="return false;">Clear</button>
-                    </div>
-                </form>
+            <div class="col-sm-6">
+
+                <table class="span4 table table-responsive">
+                    <tcaption>Collective Time Reported:</tcaption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Punch In</th>
+                            <th>Punch Out</th>
+                            <th>Sum of Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hoursTable">
+                        <tr>
+                            <td>
+                                <div class="time">
+                                    <span>Date...</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="time">
+                                    <span>Hour...</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="taskOut">
+                                    <span>Hour...</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="notesOut">
+                                    <span>Total...</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div id="sumTotal">
+                    <strong>Total Hours Worked for the week: </strong>
+                </div>
+
             </div>
         </div>
     </div>
-    </div>
-
-</body>
-
-</html>
+</div>
+<script src="/js/timecheck.js"></script>
