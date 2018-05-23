@@ -3,7 +3,7 @@ const htmlRouter = express.Router();
 
 
 renderLandingPage = (req, res, next) => {
-    return res.render('employee-home');
+    return res.render('index');
 };
 
 renderClockInOut = (req, res, next) => {

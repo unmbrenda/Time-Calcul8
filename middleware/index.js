@@ -7,7 +7,7 @@ middlewareObj.isLoggedIn = (req,res,next)=>{
     if(req.isAuthenticated()){
         return next();
     }
-    res.render('/employee/login')
+    res.render('employee-login')
 }
 
 

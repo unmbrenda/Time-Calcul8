@@ -6,47 +6,49 @@ const clockIn = document.getElementById("clockIn");
 const clockOut = document.getElementById("clockOut");
 
 
-function handleKeyPress(event){
-    if (event.target.value.length > maxUserIdLen){
+function handleKeyPress(event) {
+    if (event.target.value.length > maxUserIdLen) {
         punchCardMessage.innerText = "Employee Id should be no more than 5 digits.";
     } else {
-        punchCardMessage.innerText = "";        
+        punchCardMessage.innerText = "";
     }
 }
 
 userId.addEventListener("keydown", handleKeyPress);
 userId.addEventListener("keyup", handleKeyPress);
 
-function clockInOut(employeeId, punchCode){
+function clockInOut(employeeId, punchCode) {
 
     const newEntry = {
         employee_id: employeeId,
-        punch_code: punchCode,
-        time_punch: moment().format('YYYY-MM-DD HH:mm:ss'),
+        punch_code: punchCode
     };
 
-    const result = fetch('/api/employees', {
-        body: JSON.stringify(newEntry),
+    $.ajax('/api/employees', {
         method: 'post',
+        data: {
+            UserId: newEntry.employee_id,
+            punch_code: newEntry.punch_code
+        }
     })
-    .then(response => response.json())
-    .then(response => {
-        punchCard.reset();
-        punchCardMessage.innerHTML("Action cmpleted.");
+        // .then(response => response.json())
+        .then(response => {
+            punchCard.reset();
+            punchCardMessage.innerHTML = "Action cmpleted.";
 
-        setTimeout(() => {
-            punchCardMessage.innerHTML = "";
-        }, 2000);
-    })
-    .catch(err => {
-        punchCardMessage.innerText = "There was a problem completing action.";
-        console.log(err);
-    });
+            setTimeout(() => {
+                punchCardMessage.innerHTML = "";
+            }, 2000);
+        })
+        .catch(err => {
+            punchCardMessage.innerText = "There was a problem completing action. Please input the correct employee number.";
+            console.log(err);
+        });
 }
 
-function handleClick(event){
+function handleClick(event) {
     event.preventDefault();
-    const punchCode = event.target.id;
+    const punchCode = this.id;
 
     clockInOut(userId.value, punchCode);
 
