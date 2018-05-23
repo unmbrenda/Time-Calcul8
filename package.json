@@ -4,7 +4,8 @@
   "description": "Time clock for small business",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node app.js"
   },
   "repository": {},
   "author": "John, Brenda, Andy, Jordan",

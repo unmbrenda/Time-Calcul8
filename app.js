@@ -98,29 +98,29 @@ app.use('/', htmlRouter);
 
 
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({force: true}).then(() => {
     app.listen(process.env.PORT || 3000, () => {
         console.log('Time Clock Server Running...');
-        // db.Position.create({
-        //     position_title: "employee",
-        //     id: 1
-        // })
-        // db.Position.create({
-        //     position_title: "manager",
-        //     id: 2
-        // })
-        // bcrypt.hash('timeismoney', 10, (err, hash)=>{
-        //     db.User.create({
-        //         first_name: 'Super',
-        //         last_name: 'User',
-        //         email: "superuser@eztime.db",
-        //         password: hash,
-        //         PositionId: 2
-        //     }).then(data=>{
-        //         console.log('create success')
-        //     }).catch(err=>{
-        //         console.log('failed create')
-        //     })
-        // })
+        db.Position.create({
+            position_title: "employee",
+            id: 1
+        })
+        db.Position.create({
+            position_title: "manager",
+            id: 2
+        })
+        bcrypt.hash('timeismoney', 10, (err, hash)=>{
+            db.User.create({
+                first_name: 'Super',
+                last_name: 'User',
+                email: "superuser@eztime.db",
+                password: hash,
+                PositionId: 2
+            }).then(data=>{
+                console.log('create success')
+            }).catch(err=>{
+                console.log('failed create')
+            })
+        })
     })
 })
