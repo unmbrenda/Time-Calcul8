@@ -69,7 +69,4 @@ login.get('/logout', middleware.isLoggedIn, (req, res) => {
 })
 
 
-
-
-
 module.exports = login;

@@ -56,6 +56,10 @@ $("#hrSubmit").on("click", function () {
 
 });
 
+$("#clearInputBTN").click(function() {
+  $("#clockIn").html("");
+
+});
 
 function updateCollective() {
   $.ajax({
