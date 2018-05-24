@@ -52,9 +52,14 @@ $("#hrSubmit").on("click", function () {
     }
   })
   updateCollective();
+  location.reload();
 
 });
 
+$("#clearInputBTN").click(function() {
+  $("#clockIn").html("");
+
+});
 
 function updateCollective() {
   $.ajax({
@@ -64,8 +69,8 @@ function updateCollective() {
   })
     .then(data => {
       let currentDate = [];
+      let sumTotalArr = [];
       let entries = 0;
-
 
       data.forEach(t => {
         if (currentDate.indexOf(moment(t.createdAt).format('YYYY-MM-DD')) === -1) {
@@ -92,11 +97,22 @@ function updateCollective() {
           }
         })
         $(`.${date} .in`).text(moment(punchIn).format('hh:mm'))
+
         if (punchOut) {
 
           $(`.${date} .out`).text(moment(punchOut).format('hh:mm'))
           let x = moment(punchOut).diff(moment(punchIn), 'hours')
+
+          sumTotalArr.push(x);
+
+          let sumTotal = sumTotalArr.reduce((a,c) => {
+            return a + c
+          },0)
+
           $(`.${date} .total`).text(x)
+
+          $('#sumTotal').text(sumTotal).prepend("Total Hours Worked for the week: ")
+
         }
 
       })

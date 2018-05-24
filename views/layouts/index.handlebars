@@ -11,13 +11,15 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.css">
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <link type= "text/x-handlebars"  rel="stylesheet" href="../../css/style.css">
+    <link href="public/css/main.css" rel="stylesheet">
     <title>Ez Time</title>
-
+   
     <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
 
 </head>
 
-<body style="padding: 50px 0;">
+<body style= "background: url(../img/nyc_bg.jpg) no-repeat bottom center scroll; padding: 0px;">
     <header class="masthead text-white text-center">
         <div class="container">
             <a href="/">
@@ -45,10 +47,13 @@
         <div class="row">
             <div class="col-12">
                 {{#if currentUser}}
-                <h4 style="text-align: center;">Currently Logged in as: {{currentUser.first_name}} {{currentUser.last_name}}</h4>
-                <button class="btn btn-light btn-lg float-right">
-                    <a href="/logout">Logout</a>
-                </button>
+                <h4 class= "text-white" style="text-align: center;">Currently Logged in as: {{currentUser.first_name}} {{currentUser.last_name}}</h4>
+                <a href="/logout" class="btn btn-light btn-lg float-right">Logout</a>
+                <a href="/" class="btn btn-light btn-lg float-left">Home</a>
+                <br>
+                <br>
+                <hr>
+                <br>
                 {{/if}}
             </div>
         </div>

@@ -34,7 +34,7 @@ function clockInOut(employeeId, punchCode) {
         // .then(response => response.json())
         .then(response => {
             punchCard.reset();
-            punchCardMessage.innerHTML = "Action cmpleted.";
+            punchCardMessage.innerHTML = "Action completed.";
 
             setTimeout(() => {
                 punchCardMessage.innerHTML = "";
