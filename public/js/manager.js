@@ -24,8 +24,8 @@ $('#get-timecards').on('click', function(e){
 
 
 //adding time for employee : manager view
-$("#hrSubmit").on("click", function () {
-
+$("#hrSubmit").on("click", function (e) {
+    e.preventDefault();
   let selectedId = $('#employees option:selected').attr('id');
   // Grabs user input
   var clockIn = $("#clockIn").val();
@@ -41,39 +41,47 @@ $("#hrSubmit").on("click", function () {
     date: date,
     noteAdd: noteAdd
   };
+  if(date && clockIn && clockOut){
+    $.ajax({
+        type: "POST",
+        url: `/api/employees/addpunch/${selectedId}`,
+        data: {
+          punch_code: 'clockIn',
+          time_punch: newTime.clockIn,
+          date: newTime.date
+        },
+        dataType: "json"
+      }).then(function (data) {
+        if (data.message) {
+          $('#error').text(data.message).show();
+    
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: `/api/employees/addpunch/${selectedId}`,
+                data: {
+                  punch_code: 'clockOut',
+                  time_punch: newTime.clockOut,
+                  date: newTime.date
+                },
+                dataType: 'json'
+              }).then(function (data) {
+                if (data.message) {
+                  $('#error').text(data.message).show();
+                }
+                updateCollective(selectedId);
+              })
+        }
+        
+      });
+  }else{
+    $('#error').text('Start Time, End Time and Date are required.').show();
+  }
 
-  $.ajax({
-    type: "POST",
-    url: `/api/employees/addpunch/${selectedId}`,
-    data: {
-      punch_code: 'clockIn',
-      time_punch: newTime.clockIn,
-      date: newTime.date
-    },
-    dataType: "json"
-  }).then(function (data) {
-    if (data.message) {
-      $('#error').text(data.message).show();
+  
 
-    }
-  });
+  
 
-  $.ajax({
-    type: 'POST',
-    url: `/api/employees/addpunch/${selectedId}`,
-    data: {
-      punch_code: 'clockOut',
-      time_punch: newTime.clockOut,
-      date: newTime.date
-    },
-    dataType: 'json'
-  }).then(function (data) {
-    if (data.message) {
-      $('#error').text(data.message).show();
-    }
-  })
-  updateCollective(selectedId);
-  location.reload();
 
 
 });
@@ -98,6 +106,7 @@ $("#clearInputBTN").click(function() {
 
 
 function updateCollective(id) {
+    $('#hoursTable').empty();
     $.ajax({
       url: `/api/employees/timesheet/${id}`,
       method: 'GET'
