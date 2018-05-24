@@ -52,6 +52,7 @@ $("#hrSubmit").on("click", function () {
     }
   })
   updateCollective();
+  location.reload();
 
 });
 
