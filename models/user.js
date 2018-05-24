@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        defaultValue: 1000
+        autoIncrement: true
       },
       first_name: {
           type: DataTypes.STRING(32),
@@ -21,13 +21,14 @@ module.exports = function(sequelize, DataTypes) {
       password: {
           type: DataTypes.TEXT,
           allowNull: false
-      }  
+      } 
+    }, {
+        initialAutoIncrement: 10000
     });
     User.associate = function(models){
         User.hasMany(models.TimeSheet, {
             onDelete: 'cascade'
-        });
-        User.hasOne(models.Position)
+        })
     }
     return User;
   };
