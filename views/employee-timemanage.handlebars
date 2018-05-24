@@ -1,9 +1,4 @@
-<a href="/" class="btn btn-info">Home</a>
-<br>
-<hr>
-<br>
-
-<div class="info well well-large">
+<div class="info well well-large text-white">
     <h1>Manage Time</h1>
     <p>Fill in the table on the left with the start and end times of a your workday. Then click
         <code>submit</code>, which will sum the hours and place them in the proceeding table.</p>
@@ -13,7 +8,7 @@
 <div id="centerContainer">
     <div class="container-fluid">
         <!--row of columns -->
-        <div class="row">
+        <div class="row text-white">
             <div class="col-sm-6">
                 <br><hr><br>
                 <form id="timeTable">
@@ -39,7 +34,7 @@
                                     <input class="end form-control" type="text" placeholder="HHMM" id="clockOut">
                                 </td>
                                 <td class="notesTD">
-                                    <input class="notesInput form-control" type="text" placeholder="Date" id="date">
+                                    <input class="notesInput form-control" type="date" placeholder="Date" id="date">
                                 </td>
                             </tr>
 
@@ -47,7 +42,7 @@
 
                     </table>
                     <button type="button" id="clearInputBTN" class="btn btn-danger float-right">Clear</button>
-                    <button type="button" class="btn btn-info span" id="hrSubmit">Submit</button>
+                    <button type="button" class="btn btn-light span" id="hrSubmit">Submit</button>
                 </form>
                 <div id="error" class="alert-danger">This is a test error message.</div>
             </div>
@@ -90,7 +85,7 @@
                     </tbody>
                 </table>
                 <div id="sumTotal">
-                    <strong>Total Hours Worked for the week: </strong>
+                    <strong>Total Hours Worked: </strong>
                 </div>
 
             </div>

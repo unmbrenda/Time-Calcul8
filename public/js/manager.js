@@ -18,11 +18,70 @@ $('#get-timecards').on('click', function(e){
     e.preventDefault();
     console.log($('#employees option:selected').attr('id'))
     updateCollective($('#employees option:selected').attr('id'))
+
     $('.employ').show();
 })
 
 
+//adding time for employee : manager view
+$("#hrSubmit").on("click", function () {
 
+  let selectedId = $('#employees option:selected').attr('id');
+  // Grabs user input
+  var clockIn = $("#clockIn").val();
+  var clockOut = $("#clockOut").val();
+  var date = $("#date").val()
+  var noteAdd = $("#noteAdd").val();
+
+
+  var newTime = {
+
+    clockIn: clockIn,
+    clockOut: clockOut,
+    date: date,
+    noteAdd: noteAdd
+  };
+
+  $.ajax({
+    type: "POST",
+    url: `/api/employees/addpunch/${selectedId}`,
+    data: {
+      punch_code: 'clockIn',
+      time_punch: newTime.clockIn,
+      date: newTime.date
+    },
+    dataType: "json"
+  }).then(function (data) {
+    if (data.message) {
+      $('#error').text(data.message).show();
+
+    }
+  });
+
+  $.ajax({
+    type: 'POST',
+    url: `/api/employees/addpunch/${selectedId}`,
+    data: {
+      punch_code: 'clockOut',
+      time_punch: newTime.clockOut,
+      date: newTime.date
+    },
+    dataType: 'json'
+  }).then(function (data) {
+    if (data.message) {
+      $('#error').text(data.message).show();
+    }
+  })
+  updateCollective(selectedId);
+  location.reload();
+
+
+});
+
+$("#clearInputBTN").click(function() {
+  $("#clockIn").html("");
+
+});
 
 
 
@@ -46,7 +105,9 @@ function updateCollective(id) {
     })
       .then(data => {
         let currentDate = [];
+        let sumTotalArr = [];
         let entries = 0;
+
   
   
         data.forEach(t => {
@@ -78,10 +139,17 @@ function updateCollective(id) {
   
             $(`.${date} .out`).text(moment(punchOut).format('hh:mm'))
             let x = moment(punchOut).diff(moment(punchIn), 'hours')
+
+            sumTotalArr.push(x);
+            let sumTotal = sumTotalArr.reduce((a,c) => {
+              return a + c
+            },0)
+
             $(`.${date} .total`).text(x)
+            $('#sumTotal').text(sumTotal).prepend("Total Hours Worked for the week: ")
           }
   
         })
       })
-  
+
   }

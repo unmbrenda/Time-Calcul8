@@ -3,30 +3,31 @@ var routerEMP = express.Router()
 
 var employee = require('../models/employee.js')
 
-router.get('/api/employees/clockedin/:id', function (req, res) {
-  // tis route to show time clocked and the type of punch( in or out)
-  employee.selectOne(['time_punch', 'punch_code'], 'time_sheet', 'employee_id', req.params.id, function (data) {
-    // sending to front end
-    var employeeObj = {
-      employee: data
-    }
-    res.render('index', employeeObj)
-  })
-// response with data to index.html
-})
 
-router.get('api/employees/clockedout/:id', function (req, res) {
 
-  // if clock in and clockout already happen. show this page
-  employee.displayTimeWorked(req.params.id, function (result) {
-    var timeWorked = {
-      in: result.punchIN,
-      out: result.punchOUT,
-      day: result.DAY_OF_WEEK,
-      hours: result.hoursWORKED
-    }
-    res.render('  ', timeWorked); // where to render?
-  })
+router.get('api/employees/hours/:id', function (req, res) {
+  var employ = req.params.id;
+
+  if (employ.punch_code.clockOut) {
+    // if clock in and clockout already happen. show this page
+    employee.displayTimeWorked(req.params.id, function (result) {
+      var timeWorked = {
+        in: result.punchIN,
+        out: result.punchOUT,
+        day: result.DAY_OF_WEEK,
+        hours: result.hoursWORKED
+      }
+      res.render('  ', timeWorked); // where to render?
+    })
+  }else {
+    employee.selectOne(['time_punch', 'punch_code'], 'time_sheet', 'employee_id', req.params.id, function (data) {
+      // sending to front end
+      var employeeObj = {
+        employee: data
+      }
+      res.render('index', employeeObj)
+    })
+  }
 })
 
 // clokc in/out for each employee
