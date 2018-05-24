@@ -177,4 +177,4 @@ router.post('/api/employees/addpunch/:id',middleware.isManager, (req, res) => {
 })
 
 
-module.exportsfÍEQóv
+module.exports = router;
