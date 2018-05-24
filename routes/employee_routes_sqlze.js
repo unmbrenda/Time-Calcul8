@@ -135,4 +135,45 @@ router.post('/api/employees/addpunch', (req, res) => {
 })
 
 
+
+//use for manager adding in missed time for employee
+
+router.post('/api/employees/addpunch/:id', (req, res) => {
+    let date = moment(req.body.date);
+    let testDate = moment(req.body.date).format();
+    let endDate = moment(req.body.date).hour(23).format();
+    console.log(testDate);
+    date.hour(req.body.time_punch / 100);
+    console.log(date);
+    date.format('YYYY-MM-DD HH:mm:ss')
+    console.log(date);
+    db.TimeSheet.findAll({
+        where: {
+            createdAt: {
+                [db.Sequelize.Op.between]: [testDate, endDate]
+
+            },
+            UserId: req.params.id,
+            punch_code: req.body.punch_code
+        }
+    }).then(data => {
+        if (data.length > 0) {
+            res.json({ message: `Already have a ${req.body.punch_code} for this day.` })
+        } else {
+            db.TimeSheet.create({
+                UserId: req.params.id,
+                punch_code: req.body.punch_code,
+                createdAt: date
+            }).then(data => {
+                res.json(data);
+            }).catch(err => {
+                res.status(404).end();
+            })
+        }
+
+    })
+
+})
+
+
 module.exports = router;
