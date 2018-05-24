@@ -1,16 +1,11 @@
-body {
-     background: black
+html, body{
+	min-height: 100vh;
 
-input {
-	width: 56px;
 }
+body{
+	padding: 50px 0;
 
-.row,  .block-left, .block{
-	display: inline;
-
-	float: left;
 }
-
 .info {
 	width: 90%;
 
@@ -24,13 +19,7 @@ input {
 	margin: 0 auto;
 }
 
-.container {
-	margin: 0 auto;
-}
 
-.block-left {
-	display: block;
-}
 
 .taskInput {
 	width: 120px;
@@ -49,7 +38,7 @@ input {
 }
 
 #hrSubmit {
-	width: 500px;
+	max-width: 500px;
 	margin-bottom: 20px;
 }
 
@@ -107,12 +96,10 @@ tcaption {
 	text-align: center;
 }
 
-#sumTable {}
 
 #sumTable tbody{
 	color: #99999C;
 }
-#sumTable table {}
 
 #hoursTable  input{
 	width: 50px;
