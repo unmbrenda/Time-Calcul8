@@ -20,39 +20,42 @@ $("#hrSubmit").on("click", function () {
     date: date,
     noteAdd: noteAdd
   };
-
-  $.ajax({
-    type: "POST",
-    url: "/api/employees/addpunch",
-    data: {
-      punch_code: 'clockIn',
-      time_punch: newTime.clockIn,
-      date: newTime.date
-    },
-    dataType: "json"
-  }).then(function (data) {
-    if (data.message) {
-      $('#error').text(data.message).show();
-
-    }
-  });
-
-  $.ajax({
-    type: 'POST',
-    url: '/api/employees/addpunch',
-    data: {
-      punch_code: 'clockOut',
-      time_punch: newTime.clockOut,
-      date: newTime.date
-    },
-    dataType: 'json'
-  }).then(function (data) {
-    if (data.message) {
-      $('#error').text(data.message).show();
-    }
-  })
-  updateCollective();
-  location.reload();
+  if(date && clockIn && clockOut){
+    $.ajax({
+      type: "POST",
+      url: "/api/employees/addpunch",
+      data: {
+        punch_code: 'clockIn',
+        time_punch: newTime.clockIn,
+        date: newTime.date
+      },
+      dataType: "json"
+    }).then(function (data) {
+      if (data.message) {
+        $('#error').text(data.message).show();
+  
+      }else{
+        $.ajax({
+          type: 'POST',
+          url: '/api/employees/addpunch',
+          data: {
+            punch_code: 'clockOut',
+            time_punch: newTime.clockOut,
+            date: newTime.date
+          },
+          dataType: 'json'
+        }).then(function (data) {
+          if (data.message) {
+            $('#error').text(data.message).show();
+          }
+          updateCollective();
+        })
+      }
+    });
+  }else{
+    $('#error').text('Start Time, End Time and Date are required. Use this only if you missed both clock in and clock out.').show();
+  }
+  
 
 });
 
@@ -62,6 +65,7 @@ $("#clearInputBTN").click(function() {
 });
 
 function updateCollective() {
+  $('#hoursTable').empty();
   $.ajax({
     url: '/api/employees/timesheet',
     method: 'GET'
