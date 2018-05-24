@@ -46,7 +46,9 @@ function updateCollective(id) {
     })
       .then(data => {
         let currentDate = [];
+        let sumTotalArr = [];
         let entries = 0;
+
   
   
         data.forEach(t => {
@@ -78,7 +80,14 @@ function updateCollective(id) {
   
             $(`.${date} .out`).text(moment(punchOut).format('hh:mm'))
             let x = moment(punchOut).diff(moment(punchIn), 'hours')
+
+            sumTotalArr.push(x);
+            let sumTotal = sumTotalArr.reduce((a,c) => {
+              return a + c
+            },0)
+
             $(`.${date} .total`).text(x)
+            $('#sumTotal').text(sumTotal).prepend("Total Hours Worked for the week: ")
           }
   
         })

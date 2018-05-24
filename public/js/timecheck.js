@@ -65,10 +65,8 @@ function updateCollective() {
     .then(data => {
       let currentDate = [];
       let sumTotalArr = [];
-
       let entries = 0;
 
-      console.log(data);
       data.forEach(t => {
         if (currentDate.indexOf(moment(t.createdAt).format('YYYY-MM-DD')) === -1) {
           currentDate.push(moment(t.createdAt).format('YYYY-MM-DD'));
