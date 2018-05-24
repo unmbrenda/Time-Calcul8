@@ -1,16 +1,18 @@
 const punchCard = document.getElementById("punchClock");
 const userId = document.getElementById("userId");
 const maxUserIdLen = 5;
-const punchCardMessage = document.getElementById("punchCardMessage");
+const punchCardMessage = $("#punchCardMessage");
 const clockIn = document.getElementById("clockIn");
 const clockOut = document.getElementById("clockOut");
 
+punchCardMessage.hide();
+
 
 function handleKeyPress(event) {
-    if (event.target.value.length > maxUserIdLen) {
-        punchCardMessage.innerText = "Employee Id should be no more than 5 digits.";
+    if (this.value.length > maxUserIdLen) {
+        punchCardMessage.text("Employee Id should be no more than 5 digits.");
     } else {
-        punchCardMessage.innerText = "";
+        punchCardMessage.text("");
     }
 }
 
@@ -37,11 +39,12 @@ function clockInOut(employeeId, punchCode) {
             punchCardMessage.innerHTML = "Action completed.";
 
             setTimeout(() => {
-                punchCardMessage.innerHTML = "";
+                punchCardMessage.text("");
             }, 2000);
         })
         .catch(err => {
-            punchCardMessage.innerText = "There was a problem completing action. Please input the correct employee number.";
+            punchCardMessage.text("There was a problem completing action. Please input the correct employee number.");
+            punchCardMessage.show();
             console.log(err);
         });
 }

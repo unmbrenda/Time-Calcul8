@@ -1,5 +1,5 @@
 <div class="container text-white text-center">
-    <a href="/employee/register" class="btn btn-dark float">
+    <a href="/employee/register" class="btn btn-success float">
         Enroll employees</a>
     <br><hr><br>
     <h3 style="text-align: center;">View employee timecards</h3>
@@ -9,7 +9,7 @@
 
         </select>
         <br>
-        <button type="submit" id="get-timecards" class="btn btn-dark">Pull Timecards</button>
+        <button type="submit" id="get-timecards" class="btn btn-info">Pull Timecards</button>
     </form>
 </div>
 <br>
@@ -38,7 +38,7 @@
                             <input class="end form-control" type="text" placeholder="HHMM" id="clockOut">
                         </td>
                         <td class="notesTD">
-                            <input class="notesInput form-control" type="text" placeholder="Date" id="date">
+                            <input class="notesInput form-control" type="date" placeholder="Date" id="date">
                         </td>
                     </tr>
 
@@ -46,7 +46,7 @@
 
             </table>
             <button type="button" id="clearInputBTN" class="btn btn-danger float-right">Clear</button>
-            <button type="button" class="btn btn-info span" id="hrSubmit">Submit</button>
+            <button type="button" class="btn btn-success span" id="hrSubmit">Submit</button>
         </form>
         <div id="error" class="alert-danger">This is a test error message.</div>
     </div>

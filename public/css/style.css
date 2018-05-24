@@ -25,9 +25,6 @@ body{
 	width: 120px;
 }
 
-.notesInput {
-	width: 250px;
-}
 
 #addRowTR {
 	border-bottom: 1px solid #ddd;
@@ -101,12 +98,6 @@ tcaption {
 	color: #99999C;
 }
 
-#hoursTable  input{
-	width: 50px;
-}
-#hoursTable td:first-child {
-	width: 50px;
-}
 
 #error {
 	color: red;
