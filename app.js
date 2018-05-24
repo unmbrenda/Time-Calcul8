@@ -109,7 +109,7 @@ db.sequelize.sync().then(() => {
         //     position_title: "manager",
         //     id: 2
         // })
-        // bcrypt.hash('timeismoney', 10, (err, hash)=>{
+        // bcrypt.hash('yourpasswordhere', 10, (err, hash)=>{
         //     db.User.create({
         //         first_name: 'Super',
         //         last_name: 'User',
