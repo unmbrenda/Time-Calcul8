@@ -29,10 +29,12 @@ $("#hrSubmit").on("click", function (e) {
   let selectedId = $('#employees option:selected').attr('id');
   // Grabs user input
   var clockIn = $("#clockIn").val();
+
 var clockOut = $("#clockOut").val();
 var date = $("#date").val()
 console.log(moment().utc(date).hour(clockIn/100).minute(clockIn%100).format('YYYY-MM-DD HH:mm:ssZ'))
 var noteAdd = $("#noteAdd").val();
+
 
 
   var newTime = {
@@ -40,6 +42,7 @@ var noteAdd = $("#noteAdd").val();
     clockIn: clockIn,
     clockOut: clockOut,
     date: moment().utc(date),
+
     noteAdd: noteAdd
   };
   if(date && clockIn && clockOut){
@@ -49,6 +52,7 @@ var noteAdd = $("#noteAdd").val();
         data: {
           punch_code: 'clockIn',
           date: newTime.date.hours(clockIn/100).minutes(clockIn%100).format('YYYY-MM-DD HH:mm:ssZ')
+
         },
         dataType: "json"
       }).then(function (data) {
@@ -63,6 +67,7 @@ var noteAdd = $("#noteAdd").val();
                   punch_code: 'clockOut',
                   time_punch: newTime.clockOut,
                   date: newTime.date.hours(clockOut/100).minutes(clockOut%100).format('YYYY-MM-DD HH:mm:ssZ')
+
                 },
                 dataType: 'json'
               }).then(function (data) {
@@ -70,10 +75,12 @@ var noteAdd = $("#noteAdd").val();
                   $('#error').text(data.message).show();
                 }
                 updateCollective(selectedId);
+
                 $("#clockIn").val("");
                 $("#clockOut").val("");
                 $("#date").val("")
                 $("#noteAdd").val("");
+
               })
         }
         
@@ -81,7 +88,6 @@ var noteAdd = $("#noteAdd").val();
   }else{
     $('#error').text('Start Time, End Time and Date are required.').show();
   }
-
 
 
   
@@ -95,6 +101,7 @@ $("#clearInputBTN").click(function() {
   $("#clockOut").val("");
   $("#date").val("")
   $("#noteAdd").val("");
+
 
 });
 

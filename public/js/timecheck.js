@@ -9,6 +9,7 @@ $("#hrSubmit").on("click", function () {
   var clockOut = $("#clockOut").val();
   var date = $('#date').val();
   console.log(moment(date))
+
   var noteAdd = $("#noteAdd").val();
 
 
@@ -19,6 +20,7 @@ $("#hrSubmit").on("click", function () {
     clockIn: clockIn,
     clockOut: clockOut,
     date: moment(date).utc(date),
+
     noteAdd: noteAdd
   };
   if(date && clockIn && clockOut){
@@ -29,6 +31,7 @@ $("#hrSubmit").on("click", function () {
         punch_code: 'clockIn',
         time_punch: newTime.clockIn,
         date: newTime.date.hours(clockIn/100).minutes(clockIn%100).format('YYYY-MM-DD HH:mm:ssZ')
+
       },
       dataType: "json"
     }).then(function (data) {
@@ -43,6 +46,7 @@ $("#hrSubmit").on("click", function () {
             punch_code: 'clockOut',
             time_punch: newTime.clockOut,
             date: newTime.date.hour(clockOut/100).minutes(clockOut%100).format('YYYY-MM-DD HH:mm:ssZ')
+
           },
           dataType: 'json'
         }).then(function (data) {
@@ -60,7 +64,6 @@ $("#hrSubmit").on("click", function () {
   }else{
     $('#error').text('Start Time, End Time and Date are required. Use this only if you missed both clock in and clock out.').show();
   }
-
 
 
 });
@@ -81,13 +84,11 @@ function updateCollective() {
 
   })
     .then(data => {
-      console.log(data);
       let currentDate = [];
       let sumTotalArr = [];
       let entries = 0;
 
       data.forEach(t => {
-        console.log(moment(t.createdAt).format());
         if (currentDate.indexOf(moment(t.createdAt).format('YYYY-MM-DD')) === -1) {
           currentDate.push(moment(t.createdAt).format('YYYY-MM-DD'));
         }
