@@ -7,7 +7,9 @@ $("#hrSubmit").on("click", function () {
   // Grabs user input
   var clockIn = $("#clockIn").val();
   var clockOut = $("#clockOut").val();
-  var date = $("#date").val()
+  var date = $('#date').val();
+  console.log(moment(date))
+
   var noteAdd = $("#noteAdd").val();
 
 
@@ -17,7 +19,8 @@ $("#hrSubmit").on("click", function () {
 
     clockIn: clockIn,
     clockOut: clockOut,
-    date: date,
+    date: moment(date).utc(date),
+
     noteAdd: noteAdd
   };
   if(date && clockIn && clockOut){
@@ -27,7 +30,8 @@ $("#hrSubmit").on("click", function () {
       data: {
         punch_code: 'clockIn',
         time_punch: newTime.clockIn,
-        date: newTime.date
+        date: newTime.date.hours(clockIn/100).minutes(clockIn%100).format('YYYY-MM-DD HH:mm:ssZ')
+
       },
       dataType: "json"
     }).then(function (data) {
@@ -41,7 +45,8 @@ $("#hrSubmit").on("click", function () {
           data: {
             punch_code: 'clockOut',
             time_punch: newTime.clockOut,
-            date: newTime.date
+            date: newTime.date.hour(clockOut/100).minutes(clockOut%100).format('YYYY-MM-DD HH:mm:ssZ')
+
           },
           dataType: 'json'
         }).then(function (data) {
@@ -49,18 +54,25 @@ $("#hrSubmit").on("click", function () {
             $('#error').text(data.message).show();
           }
           updateCollective();
+          $("#clockIn").val("");
+          $("#clockOut").val("");
+          $("#date").val("")
+          $("#noteAdd").val("");
         })
       }
     });
   }else{
     $('#error').text('Start Time, End Time and Date are required. Use this only if you missed both clock in and clock out.').show();
   }
-  
+
 
 });
 
 $("#clearInputBTN").click(function() {
-  $("#clockIn").html("");
+  $("#clockIn").val("");
+  $("#clockOut").val("");
+  $("#date").val("")
+  $("#noteAdd").val("");
 
 });
 
@@ -83,7 +95,7 @@ function updateCollective() {
       })
       currentDate.forEach(date => {
         let dateRow = $(`<tr class="${date}">`)
-        dateRow.append($(`<td>`).text(moment(date).format('YYYY MMM DD')))
+        dateRow.append($(`<td>`).text(moment(date).utc().format('YYYY MMM DD')))
         dateRow.append($(`<td class="in">`));
         dateRow.append($(`<td class="out">`))
         dateRow.append($(`<td class="total">`))
@@ -100,11 +112,11 @@ function updateCollective() {
             }
           }
         })
-        $(`.${date} .in`).text(moment(punchIn).format('hh:mm'))
+        $(`.${date} .in`).text(moment(punchIn).utc().format('hh:mm'))
 
         if (punchOut) {
 
-          $(`.${date} .out`).text(moment(punchOut).format('hh:mm'))
+          $(`.${date} .out`).text(moment(punchOut).utc().format('hh:mm'))
           let x = moment(punchOut).diff(moment(punchIn), 'hours')
 
           sumTotalArr.push(x);

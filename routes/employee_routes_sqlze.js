@@ -98,14 +98,10 @@ router.post('/api/employees/timesheet/edit/:id', (req, res) => {
 })
 
 router.post('/api/employees/addpunch', (req, res) => {
-    let date = moment(req.body.date);
-    let testDate = moment(req.body.date).utc().format();
-    let endDate = moment(req.body.date).utc().hour(23).format();
-    console.log(testDate);
-    date.hour(req.body.time_punch / 100);
-    console.log(date);
-    date.format('YYYY-MM-DD HH:mm:ss')
-    console.log(date);
+    let date = moment.utc(req.body.date).hour(req.body.time_punch / 100).format('YYYY-MM-DD HH:mm:ss');
+    let testDate = moment.utc(req.body.date).format();
+    let endDate = moment.utc(req.body.date).hour(moment(req.body.date).utc().hour()+23).format();
+
     db.TimeSheet.findAll({
         where: {
             createdAt: {
@@ -122,7 +118,8 @@ router.post('/api/employees/addpunch', (req, res) => {
             db.TimeSheet.create({
                 UserId: req.user.id,
                 punch_code: req.body.punch_code,
-                createdAt: date
+                createdAt: req.body.date
+
             }).then(data => {
                 res.json(data);
             }).catch(err => {
@@ -139,14 +136,9 @@ router.post('/api/employees/addpunch', (req, res) => {
 //use for manager adding in missed time for employee
 
 router.post('/api/employees/addpunch/:id',middleware.isManager, (req, res) => {
-    let date = moment(req.body.date);
-    let testDate = moment(req.body.date).utc().format();
-    let endDate = moment(req.body.date).utc().hour(23).format();
-    console.log(testDate);
-    console.log(endDate);
-    date.hour(req.body.time_punch / 100);
-    console.log(date);
-    date.format('YYYY-MM-DD HH:mm:ss')
+    let testDate = moment(req.body.date).format();
+    let endDate = moment(req.body.date).hour(moment(req.body.date).utc().hour()+23).format();
+
     console.log(date);
     db.TimeSheet.findAll({
         where: {
@@ -164,7 +156,8 @@ router.post('/api/employees/addpunch/:id',middleware.isManager, (req, res) => {
             db.TimeSheet.create({
                 UserId: req.params.id,
                 punch_code: req.body.punch_code,
-                createdAt: date
+                createdAt: req.body.date
+
             }).then(data => {
                 res.json(data);
             }).catch(err => {

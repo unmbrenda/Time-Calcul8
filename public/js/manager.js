@@ -29,16 +29,20 @@ $("#hrSubmit").on("click", function (e) {
   let selectedId = $('#employees option:selected').attr('id');
   // Grabs user input
   var clockIn = $("#clockIn").val();
-  var clockOut = $("#clockOut").val();
-  var date = $("#date").val()
-  var noteAdd = $("#noteAdd").val();
+
+var clockOut = $("#clockOut").val();
+var date = $("#date").val()
+console.log(moment().utc(date).hour(clockIn/100).minute(clockIn%100).format('YYYY-MM-DD HH:mm:ssZ'))
+var noteAdd = $("#noteAdd").val();
+
 
 
   var newTime = {
 
     clockIn: clockIn,
     clockOut: clockOut,
-    date: date,
+    date: moment().utc(date),
+
     noteAdd: noteAdd
   };
   if(date && clockIn && clockOut){
@@ -47,8 +51,8 @@ $("#hrSubmit").on("click", function (e) {
         url: `/api/employees/addpunch/${selectedId}`,
         data: {
           punch_code: 'clockIn',
-          time_punch: newTime.clockIn,
-          date: newTime.date
+          date: newTime.date.hours(clockIn/100).minutes(clockIn%100).format('YYYY-MM-DD HH:mm:ssZ')
+
         },
         dataType: "json"
       }).then(function (data) {
@@ -62,7 +66,8 @@ $("#hrSubmit").on("click", function (e) {
                 data: {
                   punch_code: 'clockOut',
                   time_punch: newTime.clockOut,
-                  date: newTime.date
+                  date: newTime.date.hours(clockOut/100).minutes(clockOut%100).format('YYYY-MM-DD HH:mm:ssZ')
+
                 },
                 dataType: 'json'
               }).then(function (data) {
@@ -70,6 +75,12 @@ $("#hrSubmit").on("click", function (e) {
                   $('#error').text(data.message).show();
                 }
                 updateCollective(selectedId);
+
+                $("#clockIn").val("");
+                $("#clockOut").val("");
+                $("#date").val("")
+                $("#noteAdd").val("");
+
               })
         }
         
@@ -78,7 +89,6 @@ $("#hrSubmit").on("click", function (e) {
     $('#error').text('Start Time, End Time and Date are required.').show();
   }
 
-  
 
   
 
@@ -87,7 +97,11 @@ $("#hrSubmit").on("click", function (e) {
 });
 
 $("#clearInputBTN").click(function() {
-  $("#clockIn").html("");
+  $("#clockIn").val("");
+  $("#clockOut").val("");
+  $("#date").val("")
+  $("#noteAdd").val("");
+
 
 });
 
