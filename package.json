@@ -1,0 +1,30 @@
+{
+  "name": "time-calcul8",
+  "version": "1.0.0",
+  "description": "Time clock for small business",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node app.js"
+  },
+  "repository": {},
+  "author": "John, Brenda, Andy, Jordan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^5.0.1",
+    "env": "0.0.2",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "moment": "^2.22.1",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^4.37.7",
+    "sequelize-cli": "^4.0.0"
+  }
+}

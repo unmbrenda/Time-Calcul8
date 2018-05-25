@@ -1,0 +1,97 @@
+<div class="info well well-large text-white">
+    <h1>Manage Time</h1>
+    <p>Fill in the table on the left with the start and end times of a your workday. Then click
+        <code>submit</code>, which will sum the hours and place them in the proceeding table.</p>
+</div>
+<hr>
+<!-- /container -->
+
+<!--row of columns -->
+<div class="row text-white">
+    <div class="col-sm-6">
+        <br>
+        <hr>
+        <br>
+        <form id="timeTable">
+            <table class="span table table-responsive">
+                <p>Time format: 24hr(8:00AM = 0800, 9:00PM = 2100)</p>
+
+                <tcaption>Insert Times Below:</tcaption>
+                <thead>
+                    <tr>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody id="hoursBody">
+                    <tr>
+                        <td>
+                            <input class="start form-control" type="text" placeholder="HHMM" id="clockIn">
+                        </td>
+                        <td>
+                            <input class="end form-control" type="text" placeholder="HHMM" id="clockOut">
+                        </td>
+                        <td class="notesTD">
+                            <input class="notesInput form-control" type="date" placeholder="Date" id="date">
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+            <button type="button" id="clearInputBTN" class="btn btn-danger float-right">Clear</button>
+            <button type="button" class="btn btn-success span" id="hrSubmit">Submit</button>
+        </form>
+        <div id="error" class="alert-danger">This is a test error message.</div>
+    </div>
+    <div class="col-sm-6">
+        <br>
+        <hr>
+        <br>
+        <table class="span4 table table-responsive">
+            <tcaption>Collective Time Reported:</tcaption>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Punch In</th>
+                    <th>Punch Out</th>
+                    <th>Sum of Hours</th>
+                </tr>
+            </thead>
+            <tbody id="hoursTable">
+                <tr>
+                    <td>
+                        <div class="time">
+                            <span>Date...</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="time">
+                            <span>Hour...</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="taskOut">
+                            <span>Hour...</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="notesOut">
+                            <span>Total...</span>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div id="sumTotal">
+            <strong>Total Hours Worked: </strong>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="/js/timecheck.js"></script>

@@ -1,0 +1,23 @@
+<div class="container text-center" style="text-align:center">
+
+    <div class="row text-white">
+
+        <div class="col-sm-4"></div>
+        <form class="col-sm-4" action="submit" id="punchClock">
+            <div class="form-group" style="text-align: center">
+                <label for="usr">Employee ID</label>
+                <input type="number" class="form-control text-center" id="userId" max="99999" required>
+            </div>
+            <div class="container">
+                <button type="submit" class="btn btn-primary btn-lg" id="clockIn">Clock In</button>
+                <button type="submit" class="btn btn-secondary btn-lg" id="clockOut">Clock Out</button>
+            </div>
+            <div>
+                <p id="punchCardMessage">Error / Confirmation</p>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script src="/js/clockInOut.js"></script>
